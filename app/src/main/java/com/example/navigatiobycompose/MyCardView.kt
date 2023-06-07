@@ -9,15 +9,16 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.navigatiobycompose.model.DetailsModel
 
 @Composable
 fun MyCardView(
-    title: String,
-    imageResId: Int,
+    detailsModel: DetailsModel,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
@@ -30,16 +31,19 @@ fun MyCardView(
             modifier = Modifier.padding(16.dp)
         ) {
             Image(
-                painter = painterResource(imageResId),
+                painter = painterResource(detailsModel.imageId),
                 contentDescription = null,
                 modifier = Modifier
                     .size(80.dp)
-                    .clip(shape = RoundedCornerShape(8.dp))
+                    .clip(shape = RoundedCornerShape(8.dp)),
+                contentScale = ContentScale.Crop
             )
             Text(
-                text = title,
+
+                text = detailsModel.name,
                 style = MaterialTheme.typography.h6,
-                fontWeight = FontWeight.Normal
+                fontWeight = FontWeight.Normal,
+                modifier = Modifier.padding(horizontal = 12.dp)
             )
             Spacer(modifier = Modifier.height(8.dp))
             content()
@@ -49,7 +53,6 @@ fun MyCardView(
 @Composable
 @Preview(showBackground = true)
 fun PreviewCard(){
-    MyCardView(title = "Assad", imageResId =R.drawable.second ){
-
+    MyCardView(DetailsModel( "Assad",R.drawable.second )){
     }
 }
